@@ -1,5 +1,7 @@
 package br.com.fgoecking.cliente.controller;
 
+import br.com.fgoecking.cliente.DTO.ClienteRequestDTO;
+import br.com.fgoecking.cliente.DTO.ClienteResponseDTO;
 import br.com.fgoecking.cliente.model.Cliente;
 import br.com.fgoecking.cliente.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +18,12 @@ public class ControllerCliente {
     private ClienteService clienteService;
 
     @PostMapping
-    public Cliente criarCliente(@RequestBody Cliente cliente){ return clienteService.criarCliente(cliente);}
+    public ClienteResponseDTO criarCliente(@RequestBody ClienteRequestDTO cliente){
+        ClienteResponseDTO clienteSalvo = clienteService.criarCliente(cliente);
+        return clienteSalvo;}
 
     @GetMapping
-    public List<Cliente> listarClientes() { return clienteService.listarClientes();}
+    public List<ClienteResponseDTO> listarClientes() { return clienteService.listarClientes();}
 
     @GetMapping("/{id}")
     public Cliente consultarCliente(@PathVariable Long id){ return clienteService.consultarCliente(id);}

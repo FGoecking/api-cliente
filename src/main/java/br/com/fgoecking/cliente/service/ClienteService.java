@@ -1,11 +1,14 @@
 package br.com.fgoecking.cliente.service;
 
+import br.com.fgoecking.cliente.DTO.ClienteRequestDTO;
+import br.com.fgoecking.cliente.DTO.ClienteResponseDTO;
 import br.com.fgoecking.cliente.model.Cliente;
 import br.com.fgoecking.cliente.repository.ClienteRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,12 +20,21 @@ public class ClienteService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Cliente criarCliente(Cliente cliente){
-        return clienteRepository.save(cliente);
+    public ClienteResponseDTO criarCliente(ClienteRequestDTO clienteRequestDTO){
+        Cliente cliente = modelMapper.map(clienteRequestDTO, Cliente.class);
+        Cliente clientesalvo = clienteRepository.save(cliente);
+        ClienteResponseDTO clienteResponseDTO = modelMapper.map(clientesalvo, ClienteResponseDTO.class);
+        return clienteResponseDTO;
     }
 
-    public List<Cliente> listarClientes(){
-        return (List<Cliente>) clienteRepository.findAll();
+    public List<ClienteResponseDTO> listarClientes(){
+        List<Cliente> clienteList = (List<Cliente>) clienteRepository.findAll();
+        List<ClienteResponseDTO> clienteResponseDTOList = new ArrayList<>();
+        clienteList.forEach(cliente -> {
+           ClienteResponseDTO clienteResponseDTO = modelMapper.map(cliente, ClienteResponseDTO.class);
+            clienteResponseDTOList.add(clienteResponseDTO);
+        });
+        return clienteResponseDTOList;
     }
 
     public void deleterCliente(Long id) {
