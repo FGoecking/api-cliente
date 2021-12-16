@@ -6,6 +6,7 @@ import br.com.fgoecking.cliente.model.Cliente;
 import br.com.fgoecking.cliente.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,24 +19,24 @@ public class ControllerCliente {
     private ClienteService clienteService;
 
     @PostMapping
-    public ClienteResponseDTO criarCliente(@RequestBody ClienteRequestDTO cliente){
+    public ClienteResponseDTO criarCliente(@Validated @RequestBody ClienteRequestDTO cliente){
         ClienteResponseDTO clienteSalvo = clienteService.criarCliente(cliente);
         return clienteSalvo;}
 
     @GetMapping
     public List<ClienteResponseDTO> listarClientes() { return clienteService.listarClientes();}
 
-    @GetMapping("/{id}")
-    public Cliente consultarCliente(@PathVariable Long id){ return clienteService.consultarCliente(id);}
+    @GetMapping("/{email}/email")
+    public ClienteResponseDTO consultarClienteEmail(@PathVariable String email){ return clienteService.consultarClienteEmail(email);}
 
-    @GetMapping("/email/{email}")
-    public Cliente consultarClienteEmail(@PathVariable String email){ return clienteService.consultarClienteEmail(email);}
+    @GetMapping("/{cpf}/cpf")
+    public ClienteResponseDTO consultarClienteCPF(@PathVariable String cpf){ return clienteService.consultarClienteCPF(cpf);}
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{email}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletarCliente(@PathVariable Long id){ clienteService.deleterCliente(id);}
+    public void deletarClientePorEmail(@PathVariable String email) throws Exception { clienteService.deleterCliente(email);}
 
-    @PutMapping("/{id}")
+    @PutMapping("/{email}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void atualizarCliente(@PathVariable Long id, @RequestBody Cliente cliente) throws Exception { clienteService.atualizarCliente(cliente, id);}
+    public void atualizarCliente(@PathVariable String email, @RequestBody ClienteRequestDTO clienteRequestDTO) throws Exception { clienteService.atualizarCliente(clienteRequestDTO, email);}
 }

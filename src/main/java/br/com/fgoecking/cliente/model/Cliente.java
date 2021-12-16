@@ -1,5 +1,6 @@
 package br.com.fgoecking.cliente.model;
 
+import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -14,14 +15,19 @@ public class Cliente {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cliente_sequence")
     private Long id;
 
+    @Column(nullable = false, unique = true, length = 11)
     private String cpf;
 
+    @Column(nullable = false)
     private String nome;
 
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @Column(length = 15)
     private String telefone;
 
+    @Column(length = 3)
     private String ddd;
 
 }
