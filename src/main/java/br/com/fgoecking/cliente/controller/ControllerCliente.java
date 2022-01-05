@@ -2,7 +2,6 @@ package br.com.fgoecking.cliente.controller;
 
 import br.com.fgoecking.cliente.DTO.ClienteRequestDTO;
 import br.com.fgoecking.cliente.DTO.ClienteResponseDTO;
-import br.com.fgoecking.cliente.model.Cliente;
 import br.com.fgoecking.cliente.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

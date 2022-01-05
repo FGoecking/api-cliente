@@ -23,8 +23,7 @@ public class ClienteService {
     public ClienteResponseDTO criarCliente(ClienteRequestDTO clienteRequestDTO){
         Cliente cliente = modelMapper.map(clienteRequestDTO, Cliente.class);
         Cliente clientesalvo = clienteRepository.save(cliente);
-        ClienteResponseDTO clienteResponseDTO = modelMapper.map(clientesalvo, ClienteResponseDTO.class);
-        return clienteResponseDTO;
+        return modelMapper.map(clientesalvo, ClienteResponseDTO.class);
     }
 
     public List<ClienteResponseDTO> listarClientes(){

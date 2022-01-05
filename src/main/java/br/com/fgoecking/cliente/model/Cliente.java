@@ -1,6 +1,5 @@
 package br.com.fgoecking.cliente.model;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
